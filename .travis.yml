@@ -9,5 +9,7 @@ env:
   - PG_VERSION=9.6.16
   - PG_VERSION=9.5.19
   - PG_VERSION=9.4.24
+install:
+- pip install awscli
 script:
-- make all
+- make build postgresql_version=${PG_VERSION}
