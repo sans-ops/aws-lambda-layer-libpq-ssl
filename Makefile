@@ -2,7 +2,7 @@ result = pglayer
 postgresql_version ?= 11.5
 zipfile = aws-lambda-layer-libpq-$(postgresql_version).zip
 layer_name = postgres-libpq
-container_name = 3f466122-becf-11e9-be57-33540263bc3e
+container_name = libpq-jgpd-$(postgresql_version)
 
 all: build upload
 
