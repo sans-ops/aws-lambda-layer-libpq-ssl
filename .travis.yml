@@ -1,0 +1,13 @@
+sudo: false
+language: python
+services:
+- "docker"
+env:
+  matrix:
+  - PG_VERSION=11.5
+  - PG_VERSION=10.10
+  - PG_VERSION=9.6.16
+  - PG_VERSION=9.5.19
+  - PG_VERSION=9.4.24
+script:
+- make all
