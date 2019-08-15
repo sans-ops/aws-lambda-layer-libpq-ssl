@@ -15,10 +15,6 @@ install:
 - pip install awscli
 script:
 - make build postgresql_version=${PG_VERSION}
-after_success:
-- if [[ "${PG_VERSION}" == "11.5" && "${TRAVIS_BRANCH}" == "master" && "${TRAVIS_PULL_REQUEST_BRANCH}" == "" ]]; then
-    make share postgresql_version=${PG_VERSION};
-  fi
 deploy:
   provider: script
   script: make share postgresql_version=${PG_VERSION};
