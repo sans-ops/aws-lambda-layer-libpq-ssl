@@ -1,4 +1,4 @@
-FROM lambci/lambda:build-python3.7
+FROM lambci/lambda-base:build
 
 ARG postgresql_version
 ARG zipfile
