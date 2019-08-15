@@ -1,6 +1,6 @@
 postgresql_version ?= 11.5
 zipfile = aws-lambda-layer-libpq-$(postgresql_version).zip
-layer_name = postgresql-libpq
+layer_name = postgresql-libpq-dev
 container_name = libpq-jgpd-$(postgresql_version)
 result = libpq-layer-$(postgresql_version)
 layer_statement_id = public-read
