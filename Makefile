@@ -67,9 +67,13 @@ list:
 		--output text
 
 deploy-all:
-	for r in $(regions); do \ \ \ \
+	for r in $(regions); do \
 		$(MAKE) deploy postgresql_version=$(postgresql_version) region=$$r; \
 	done
-	for r in $(regions); do \ \ \ \
-		$(MAKE) list region=$$r; \
+
+list-all:
+	for r in $(regions); do \
+		aws --region=$$r lambda list-layers \
+			--query "Layers[?LayerName=='$(layer_name)'].LatestMatchingVersion.LayerVersionArn" \
+			--output text; \
 	done
