@@ -19,7 +19,14 @@ deploy:
   provider: script
   skip_cleanup: true
   script:
-  - make deploy-all list-all postgresql_version=${PG_VERSION}
+  - make deploy-all list-all postgresql_version=${PG_VERSION} layer_name=postgresql-libpq-dev
   on:
     branch: dev
+    condition: ${PG_VERSION} = 11.5
+  provider: script
+  skip_cleanup: true
+  script:
+  - make deploy-all list-all postgresql_version=${PG_VERSION} layer_name=postgresql-libpq
+  on:
+    branch: master
     condition: ${PG_VERSION} = 11.5
