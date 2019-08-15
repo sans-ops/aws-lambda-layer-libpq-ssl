@@ -17,6 +17,8 @@ script:
 - make build postgresql_version=${PG_VERSION}
 deploy:
   provider: script
+  skip_cleanup: true
   script: make share postgresql_version=${PG_VERSION};
   on:
     branch: dev
+    condition: ${PG_VERSION} = 11.5
