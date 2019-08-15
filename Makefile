@@ -43,3 +43,8 @@ deploy: upload
 		--principal '*' \
 		--version-number $(version)
 	$(aws) lambda list-layers --query "Layers[?LayerName=='$(layer_name)']"
+
+list:
+	$(aws) lambda list-layers \
+		--query "Layers[?LayerName=='$(layer_name)'].LatestMatchingVersion.LayerVersionArn" \
+		--output text
