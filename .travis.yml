@@ -3,6 +3,8 @@ language: python
 services:
 - "docker"
 env:
+  global:
+    secure: "ug89XJ4LKxi3fLNjnJSMjAR40IPMKmH1lFIUHqga2cKsZqt7e1rTCCJfyXqGERYQJTN+AwIZ6pUobyxfUKyWD6G9ZvoLX9WjQHHFgSgIDxvE0F/WmJvNgbHFlkWoZTRZ+EWMJU4e9x0tPVah4GVwCc3vHno1XKVPP1SVmcjQ4qBkYB7af0eHsgsSP7eHrpy0xeVvONmvIAg2fj5OnXb5jpfcGH+Xz+1hWPrv0DiDVAf2D+LcGaiWl+FZBkAswXG46w6lWg/LKktMU4lPmO8FP2CeG2Wl6UmH0m25RBAHJDI2HaOKZBt5d75DEV6HwJQN0WD2rGt3mSV/cFILaE5Mth2W2eRkYFZOO6RGZjq9IuZkXphqEQU49dMcTRC/QBrtL332fFXAZJd5DHfyLydhj0Vtl3RQpKD6TYpJMriVlIYe4Ec0RzDHfaUBqNzeQ8mclxu84oYpQpXA/lqkFdGxVrKYFYTnXapDy9WNkUSAD6F7mTU6NEOlYhrvy32tkWQaQYAifjeQn8Wb/68fGfURI9WUvjs4/e/1X5XmLtoM2ZZxNNbgtBpGAp3MXjQqiRJV/eWM5lcguY5hQjQvA6n2dxAmCGSnZmJ2X0aepXUddwHwGMCxu7IYk61X0TnlPjKUuP3per5mMDydNEePvkF365vZ0W7RGDpmYD7PUgzFyOU="
   matrix:
   - PG_VERSION=11.5
   - PG_VERSION=10.10
@@ -13,3 +15,7 @@ install:
 - pip install awscli
 script:
 - make build postgresql_version=${PG_VERSION}
+after_success:
+- if [[ "${PG_VERSION}" == "11.5" && "${TRAVIS_BRANCH}" == "master" && "${TRAVIS_PULL_REQUEST_BRANCH}" == "" ]]; then
+    make share postgresql_version=${PG_VERSION}
+  fi
