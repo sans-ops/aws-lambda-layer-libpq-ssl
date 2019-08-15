@@ -4,6 +4,8 @@ layer_name = postgresql-libpq-dev
 container_name = libpq-jgpd-$(postgresql_version)
 result = libpq-layer-$(postgresql_version)
 layer_statement_id = public-read
+region ?= us-east-1
+aws = aws --region $(region)
 
 all: build upload share
 
@@ -20,24 +22,24 @@ clean:
 	docker rmi -f $(result)
 
 upload:
-	aws lambda publish-layer-version \
+	$(aws) lambda publish-layer-version \
 		--layer-name $(layer_name) \
 		--zip-file fileb://$(zipfile) \
 		--compatible-runtimes python3.6 python3.7
 
-share: upload
-	$(eval version = $(shell aws lambda list-layers \
+deploy: upload
+	$(eval version = $(shell $(aws) lambda list-layers \
 		--query "Layers[?LayerName=='$(layer_name)'].LatestMatchingVersion.Version" \
 		--output text \
 	))
-	-aws lambda remove-layer-version-permission \
+	-$(aws) lambda remove-layer-version-permission \
 		--layer-name $(layer_name) \
 		--statement-id $(layer_statement_id) \
 		--version-number $(version)
-	aws lambda add-layer-version-permission \
+	$(aws) lambda add-layer-version-permission \
 		--layer-name $(layer_name) \
 		--statement-id $(layer_statement_id) \
 		--action lambda:GetLayerVersion \
 		--principal '*' \
 		--version-number $(version)
-	aws lambda list-layers --query "Layers[?LayerName=='$(layer_name)']"
+	$(aws) lambda list-layers --query "Layers[?LayerName=='$(layer_name)']"
