@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/sans-servers/aws-lambda-layer-libpq.svg?branch=master)](https://travis-ci.org/sans-servers/aws-lambda-layer-libpq)
+[![Build Status](https://travis-ci.org/sans-servers/aws-lambda-layer-libpq-ssl.svg?branch=master)](https://travis-ci.org/sans-servers/aws-lambda-layer-libpq-ssl)
 
 # PostgreSQL AWS Lambda Layer
 
